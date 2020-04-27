@@ -48,10 +48,13 @@ export default class Home extends Component{
                     }
                     selected={this.state.selectedTab === 'blueTab'}
                     // badge={1} 表示右上角 红色数字等  类似未读消息  dot：红色圆点
+                    // onPress 点击事件 相当于onClick
                     onPress={() => {
                     this.setState({
                         selectedTab: 'blueTab',
                     });
+                    // 点击跳转 index主页 编程式导航
+                    this.props.history.push('/home/index')
                     }}
                     data-seed="logId"
                 >
@@ -70,6 +73,8 @@ export default class Home extends Component{
                     this.setState({
                         selectedTab: 'redTab',
                     });
+                    this.props.history.push('/home/houselist')
+
                     }}
                     data-seed="logId1"
                 >
@@ -90,6 +95,8 @@ export default class Home extends Component{
                     this.setState({
                         selectedTab: 'greenTab',
                     });
+                    this.props.history.push('/home/news')
+
                     }}
                 >
                 </TabBar.Item>
@@ -107,6 +114,8 @@ export default class Home extends Component{
                 this.setState({
                     selectedTab: 'yellowTab',
                 });
+                this.props.history.push('/home/profile')
+
                 }}
             >
             </TabBar.Item>
