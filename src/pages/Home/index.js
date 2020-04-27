@@ -13,7 +13,7 @@ import './home.css'
 export default class Home extends Component{
     // state数据
   state = {
-      selectedTab: 'redTab',
+      selectedTab: '/home/index', // 用来控制 底部tab栏 高亮的
       hidden: false
     };
     // 函数
@@ -46,12 +46,15 @@ export default class Home extends Component{
                     selectedIcon={ //选中图标
                         <i className='iconfont icon-ind'></i> 
                     }
-                    selected={this.state.selectedTab === 'blueTab'}
+                    // selected 控制当前点击的高亮 true高亮 false不高亮  
+                    selected={this.state.selectedTab === '/home/index'}
                     // badge={1} 表示右上角 红色数字等  类似未读消息  dot：红色圆点
                     // onPress 点击事件 相当于onClick
                     onPress={() => {
+                        // 当点击当前的tab的时候 设置单词 控制高亮
+                        // 设置一个有意义的单词 首页就叫 /home/index
                     this.setState({
-                        selectedTab: 'blueTab',
+                        selectedTab: '/home/index',
                     });
                     // 点击跳转 index主页 编程式导航
                     this.props.history.push('/home/index')
@@ -68,10 +71,10 @@ export default class Home extends Component{
                     }
                     title="找房"
                     key="Koubei"
-                    selected={this.state.selectedTab === 'redTab'}
+                    selected={this.state.selectedTab === '/home/houselist'}
                     onPress={() => {
                     this.setState({
-                        selectedTab: 'redTab',
+                        selectedTab: '/home/houselist',
                     });
                     this.props.history.push('/home/houselist')
 
@@ -90,10 +93,10 @@ export default class Home extends Component{
                     }
                     title="资讯"
                     key="Friend"
-                    selected={this.state.selectedTab === 'greenTab'}
+                    selected={this.state.selectedTab === '/home/news'}
                     onPress={() => {
                     this.setState({
-                        selectedTab: 'greenTab',
+                        selectedTab: '/home/news',
                     });
                     this.props.history.push('/home/news')
 
@@ -109,10 +112,10 @@ export default class Home extends Component{
                 }
                 title="我的"
                 key="my"
-                selected={this.state.selectedTab === 'yellowTab'}
+                selected={this.state.selectedTab === '/home/profile'}
                 onPress={() => {
                 this.setState({
-                    selectedTab: 'yellowTab',
+                    selectedTab: '/home/profile',
                 });
                 this.props.history.push('/home/profile')
 
