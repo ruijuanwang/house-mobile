@@ -10,10 +10,32 @@ import Profile from '../Profile' // 我的组件
 // 导入 home 的css样式
 import './home.css'
 
+// 这个底部 一般不会大变化 数据比较死  写在组件外面 
+const tabItems = [{
+  title: '首页',
+  icon: 'icon-ind',
+  path: '/home/index'
+},
+{
+  title: '找房',
+  icon: 'icon-findHouse',
+  path: '/home/houselist'
+},
+{
+  title: '资讯',
+  icon: 'icon-infom',
+  path: '/home/news'
+},
+{
+  title: '我的',
+  icon: 'icon-my',
+  path: '/home/profile'
+}]
+
 export default class Home extends Component{
     // state数据
   state = {
-      selectedTab: '/home/index', // 用来控制 底部tab栏 高亮的
+      selectedTab: '/home/index', // 用来控制 底部tab栏 选中高亮的 默认选中首页
       hidden: false
     };
     // 函数
@@ -37,91 +59,37 @@ export default class Home extends Component{
                 noRenderContent={ true } // 不渲染内容 true不渲染   false渲染  
              >
                  {/* TabBar.Item 每一项 */}
-                <TabBar.Item
-                    title="首页" // 标题
-                    key="Life"
-                    icon={ // 未选中图标 阿里巴巴图标iconfont
-                        <i className='iconfont icon-ind'></i> 
-                    }
-                    selectedIcon={ //选中图标
-                        <i className='iconfont icon-ind'></i> 
-                    }
-                    // selected 控制当前点击的高亮 true高亮 false不高亮  
-                    selected={this.state.selectedTab === '/home/index'}
-                    // badge={1} 表示右上角 红色数字等  类似未读消息  dot：红色圆点
-                    // onPress 点击事件 相当于onClick
-                    onPress={() => {
-                        // 当点击当前的tab的时候 设置单词 控制高亮
-                        // 设置一个有意义的单词 首页就叫 /home/index
-                    this.setState({
-                        selectedTab: '/home/index',
-                    });
-                    // 点击跳转 index主页 编程式导航
-                    this.props.history.push('/home/index')
-                    }}
-                    data-seed="logId"
-                >
-                </TabBar.Item>
-                <TabBar.Item
-                    icon={
-                        <i className='iconfont icon-findHouse'></i> 
-                    }
-                    selectedIcon={
-                        <i className='iconfont icon-findHouse'></i> 
-                    }
-                    title="找房"
-                    key="Koubei"
-                    selected={this.state.selectedTab === '/home/houselist'}
-                    onPress={() => {
-                    this.setState({
-                        selectedTab: '/home/houselist',
-                    });
-                    this.props.history.push('/home/houselist')
-
-                    }}
-                    data-seed="logId1"
-                >
-                </TabBar.Item>
-                <TabBar.Item
-                    icon={
-                        <i className='iconfont icon-infom'></i> 
-                   
-                    }
-                    selectedIcon={
-                        <i className='iconfont icon-infom'></i> 
-                    
-                    }
-                    title="资讯"
-                    key="Friend"
-                    selected={this.state.selectedTab === '/home/news'}
-                    onPress={() => {
-                    this.setState({
-                        selectedTab: '/home/news',
-                    });
-                    this.props.history.push('/home/news')
-
-                    }}
-                >
-                </TabBar.Item>
-                <TabBar.Item
-                icon={                        
-                      <i className='iconfont icon-my'></i> 
-                    }
-                selectedIcon={
-                        <i className='iconfont icon-my'></i> 
-                }
-                title="我的"
-                key="my"
-                selected={this.state.selectedTab === '/home/profile'}
-                onPress={() => {
-                this.setState({
-                    selectedTab: '/home/profile',
-                });
-                this.props.history.push('/home/profile')
-
-                }}
-            >
-            </TabBar.Item>
+                 {/* 底部栏 一共有四项 除了path地址(包括选中高亮)、icon字体图标、title标题不一样，其他都一样 所以删掉三个 只留一个 用来循环 */}
+                {/* 使用map循环 TabBar.Item 每一项  把tabItems这个数组循环*/}
+                { tabItems.map((item,index)=>{
+                    // map函数要return
+                    return <TabBar.Item
+                        title={item.title} // 标题
+                        key="Life"
+                        icon={ // 未选中图标 阿里巴巴图标iconfont
+                            <i className={`iconfont ${item.icon}`}></i> 
+                        }
+                        selectedIcon={ //选中图标
+                            <i className={`iconfont ${item.icon}`}></i> 
+                        }
+                        // selected 控制当前点击的高亮 true高亮 false不高亮  
+                        selected={this.state.selectedTab === item.path}
+                        // badge={1} 表示右上角 红色数字等  类似未读消息  dot：红色圆点
+                        // onPress 点击事件 相当于onClick
+                        onPress={() => {
+                            // 当点击当前的tab的时候 设置单词 控制高亮
+                            // 设置一个有意义的单词 首页就叫 /home/index
+                        this.setState({
+                            selectedTab: item.path,
+                        });
+                        // 点击跳转 index主页 编程式导航
+                        this.props.history.push(item.path)
+                        }}
+                    >
+                    </TabBar.Item>
+                }) }
+   
+         
             </TabBar>
   
  
