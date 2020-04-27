@@ -18,21 +18,11 @@ export default class Home extends Component{
      console.log(res);
      this.setState({
          swiperData:res.data.body  // 获取来赋值到state的轮播图数据中
-     })
-     
-
+     })    
   }
-    render(){
-        return <div>
-            {/* 我是首页组件 */}
-            {/* 轮播图 使用走马灯Carousel组件 */}
-            {/* <WingBlank>  包裹在外层 表示两侧留白 我们不需要*/}
-            <Carousel
-            autoplay={false} // 是否自动播放
-            infinite // 是否无限循环轮播
-            >
-                {/* 循环state中的轮播图片 */}
-            {this.state.swiperData.map(val => (
+   // 循环轮播图 封装成函数
+    renderSwiper(){
+      return this.state.swiperData.map(val => (
                 <a
                 key={val.id}
                 href="http://www.alipay.com"
@@ -50,7 +40,22 @@ export default class Home extends Component{
                     }}
                 />
                 </a>
-            ))}
+            ))
+    }
+    render(){
+        return <div>
+            {/* 我是首页组件 */}
+            {/* 轮播图 使用走马灯Carousel组件 */}
+            {/* <WingBlank>  包裹在外层 表示两侧留白 我们不需要*/}
+            <Carousel
+            autoplay={false} // 是否自动播放
+            infinite // 是否无限循环轮播
+            >
+
+            {/* 循环state中的轮播图片 */}
+            {/* 调用循环轮播图的函数 */}
+            { this.renderSwiper() }
+            
             </Carousel>
             </div>
     }
