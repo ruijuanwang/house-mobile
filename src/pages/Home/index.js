@@ -7,6 +7,8 @@ import Index from '../Index' // 主页组件
 import Houselist from '../Houselist' // 找房组件
 import News from '../News' // 资讯组件
 import Profile from '../Profile' // 我的组件
+// 导入 home 的css样式
+import './home.css'
 
 export default class Home extends Component{
     // state数据
@@ -15,34 +17,6 @@ export default class Home extends Component{
       hidden: false
     };
     // 函数
-
-  renderContent(pageText) {
-    return (
-      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-        <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
-        <a style={{ display: 'block', marginTop: 40, marginBottom: 20, color: '#108ee9' }}
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({
-              hidden: !this.state.hidden,
-            });
-          }}
-        >
-          Click to show/hide tab-bar
-        </a>
-        <a style={{ display: 'block', marginBottom: 600, color: '#108ee9' }}
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({
-              fullScreen: !this.state.fullScreen,
-            });
-          }}
-        >
-          Click to switch fullscreen
-        </a>
-      </div>
-    );
-  }
 
     render(){
         return <div className='home'>
@@ -60,6 +34,7 @@ export default class Home extends Component{
                 tintColor="#21b97a" // 选中的文字颜色
                 barTintColor="white" // 底部外层TabBar背景色
                 hidden={this.state.hidden} // 是否隐藏TabBar标签 true 隐藏  false 不隐藏
+                noRenderContent={ true } // 不渲染内容 true不渲染   false渲染  
              >
                  {/* TabBar.Item 每一项 */}
                 <TabBar.Item
@@ -80,7 +55,6 @@ export default class Home extends Component{
                     }}
                     data-seed="logId"
                 >
-                    {this.renderContent('Life')}
                 </TabBar.Item>
                 <TabBar.Item
                     icon={
@@ -99,7 +73,6 @@ export default class Home extends Component{
                     }}
                     data-seed="logId1"
                 >
-                    {this.renderContent('Koubei')}
                 </TabBar.Item>
                 <TabBar.Item
                     icon={
@@ -119,7 +92,6 @@ export default class Home extends Component{
                     });
                     }}
                 >
-                    {this.renderContent('Friend')}
                 </TabBar.Item>
                 <TabBar.Item
                 icon={                        
@@ -137,7 +109,6 @@ export default class Home extends Component{
                 });
                 }}
             >
-                {this.renderContent('My')}
             </TabBar.Item>
             </TabBar>
   
