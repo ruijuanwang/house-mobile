@@ -20,7 +20,7 @@ export default class Home extends Component{
     return (
       <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
         <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
-        {/* <a style={{ display: 'block', marginTop: 40, marginBottom: 20, color: '#108ee9' }} */}
+        <a style={{ display: 'block', marginTop: 40, marginBottom: 20, color: '#108ee9' }}
           onClick={(e) => {
             e.preventDefault();
             this.setState({
@@ -29,8 +29,8 @@ export default class Home extends Component{
           }}
         >
           Click to show/hide tab-bar
-        {/* </a> */}
-        {/* <a style={{ display: 'block', marginBottom: 600, color: '#108ee9' }} */}
+        </a>
+        <a style={{ display: 'block', marginBottom: 600, color: '#108ee9' }}
           onClick={(e) => {
             e.preventDefault();
             this.setState({
@@ -39,7 +39,7 @@ export default class Home extends Component{
           }}
         >
           Click to switch fullscreen
-        {/* </a> */}
+        </a>
       </div>
     );
   }
@@ -65,20 +65,14 @@ export default class Home extends Component{
                 <TabBar.Item
                     title="首页" // 标题
                     key="Life"
-                    icon={<div style={{
-                    width: '22px',
-                    height: '22px',
-                    background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat' }}
-                    />
+                    icon={ // 未选中图标 阿里巴巴图标iconfont
+                        <i className='iconfont icon-ind'></i> 
                     }
-                    selectedIcon={<div style={{
-                    width: '22px',
-                    height: '22px',
-                    background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat' }}
-                    />
+                    selectedIcon={ //选中图标
+                        <i className='iconfont icon-ind'></i> 
                     }
                     selected={this.state.selectedTab === 'blueTab'}
-                    badge={1}
+                    // badge={1} 表示右上角 红色数字等  类似未读消息  dot：红色圆点
                     onPress={() => {
                     this.setState({
                         selectedTab: 'blueTab',
@@ -90,22 +84,13 @@ export default class Home extends Component{
                 </TabBar.Item>
                 <TabBar.Item
                     icon={
-                    <div style={{
-                        width: '22px',
-                        height: '22px',
-                        background: 'url(https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg) center center /  21px 21px no-repeat' }}
-                    />
+                        <i className='iconfont icon-findHouse'></i> 
                     }
                     selectedIcon={
-                    <div style={{
-                        width: '22px',
-                        height: '22px',
-                        background: 'url(https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg) center center /  21px 21px no-repeat' }}
-                    />
+                        <i className='iconfont icon-findHouse'></i> 
                     }
                     title="找房"
                     key="Koubei"
-                    badge={'new'}
                     selected={this.state.selectedTab === 'redTab'}
                     onPress={() => {
                     this.setState({
@@ -118,22 +103,15 @@ export default class Home extends Component{
                 </TabBar.Item>
                 <TabBar.Item
                     icon={
-                    <div style={{
-                        width: '22px',
-                        height: '22px',
-                        background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat' }}
-                    />
+                        <i className='iconfont icon-infom'></i> 
+                   
                     }
                     selectedIcon={
-                    <div style={{
-                        width: '22px',
-                        height: '22px',
-                        background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat' }}
-                    />
+                        <i className='iconfont icon-infom'></i> 
+                    
                     }
                     title="资讯"
                     key="Friend"
-                    dot
                     selected={this.state.selectedTab === 'greenTab'}
                     onPress={() => {
                     this.setState({
@@ -144,8 +122,12 @@ export default class Home extends Component{
                     {this.renderContent('Friend')}
                 </TabBar.Item>
                 <TabBar.Item
-                icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
-                selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+                icon={                        
+                      <i className='iconfont icon-my'></i> 
+                    }
+                selectedIcon={
+                        <i className='iconfont icon-my'></i> 
+                }
                 title="我的"
                 key="my"
                 selected={this.state.selectedTab === 'yellowTab'}
