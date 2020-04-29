@@ -117,6 +117,35 @@ export default class Home extends Component{
                  {/* 调用函数 */}
                  {this.renderNavs()}                                         
             </Flex>
+            {/* 3.租房小组 */}
+            <div className='group'>
+                {/* 标题 */}
+                <div className='group-title'>
+                    <h3>租房小组</h3>
+                    <span>更多</span>
+                </div>
+                {/* 四个盒子内容 */}
+                <div className='group-content'>
+                    {/* 每一项 */}
+                    <div className='item'>
+                        <div>家住回龙观</div>
+                        <img src={nav1} alt=''></img>
+                    </div>
+                    <div className='item'>
+                        <div>家住回龙观</div>
+                        <img src={nav1} alt=''></img>
+                    </div>
+                    <div className='item'>
+                        <div>家住回龙观</div>
+                        <img src={nav1} alt=''></img>
+                    </div>
+                    <div className='item'>
+                        <div>家住回龙观</div>
+                        <img src={nav1} alt=''></img>
+                    </div>
+                    
+                </div>
+            </div>
 
             </div>
     }
