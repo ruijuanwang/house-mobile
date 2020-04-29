@@ -30,7 +30,8 @@ ul {
 html,
 body,
 #root,
-.App {
+.map,
+.App{
   height: 100%;
 }
 
