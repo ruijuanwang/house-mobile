@@ -7,7 +7,7 @@ class App extends React.Component{
   render(){
     // BrowserRouter 必须在最外层包裹一次
     return <Router>
-    <div>
+    <div className='App'>
       {/* 我是APP根组件 */}
       {/* 配置 / 默认地址 重定向 默认打开显示Index首页 */}
       <Route

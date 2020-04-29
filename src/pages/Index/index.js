@@ -141,7 +141,26 @@ export default class Home extends Component{
     render(){
         return <div className='index'>
             {/* 我是首页组件 */}
-            {/* 轮播图 使用走马灯Carousel组件 */}
+            {/* 0.顶部搜索栏部分 */}
+            <Flex className='searchBox'>
+            <Flex className='searchLeft'>
+                <div className='location'>
+                   <span>上海</span>                   
+                    <i className="iconfont icon-arrow" />
+                </div>
+                <div className='searchForm'>
+                    <i className="iconfont icon-seach" />
+                    <span>请输入小区或地址</span>
+                </div>
+            </Flex>
+            {/* 右侧地图图标 点击跳到 /map */}
+            <i className="iconfont icon-map" 
+              onClick={()=>{
+                  this.props.history.push('/map') // 点击跳转地图
+              }}
+             />
+        </Flex>
+            {/* 1.轮播图 使用走马灯Carousel组件 */}
             {/* <WingBlank>  包裹在外层 表示两侧留白 我们不需要*/}
             <Carousel
             autoplay={this.state.isplay} // 是否自动播放 true
