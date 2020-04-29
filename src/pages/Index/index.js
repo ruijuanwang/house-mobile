@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 import axios from 'axios' // 引入axios包
-import { Carousel, WingBlank, Flex } from 'antd-mobile'; // 导入走马灯组件
+import { Carousel, WingBlank, Flex,Grid  } from 'antd-mobile'; // 导入走马灯组件
 import './index.scss' // 引入样式
 // 导入 图片 
 import nav1 from  "../../assets/images/nav-1.png"
@@ -48,13 +48,12 @@ export default class Home extends Component{
   async getGroups(){
       const res = await axios('http://api-haoke-dev.itheima.net/home/groups?area=AREA%7C88cff55c-aaa4-e2e0')
       console.log("租房小组数据",res);
-     if(res.data.state===200){
+     if(res.data.status===200){
         //  状态码为200就是成功
           this.setState({
           groups:res.data.body // 赋值到state中
       })
-     }
-      
+     }   
   }
   // 调用接口获取轮播图数据的函数
   async getSwiper(){
@@ -138,29 +137,34 @@ export default class Home extends Component{
                     <h3>租房小组</h3>
                     <span>更多</span>
                 </div>
-                {/* 四个盒子内容 */}
-                <div className='group-content'>
-                    {/* 每一项 */}
-                    <div className='item'>
-                        <div>家住回龙观</div>
-                        <img src={nav1} alt=''></img>
-                    </div>
-                    <div className='item'>
-                        <div>家住回龙观</div>
-                        <img src={nav1} alt=''></img>
-                    </div>
-                    <div className='item'>
-                        <div>家住回龙观</div>
-                        <img src={nav1} alt=''></img>
-                    </div>
-                    <div className='item'>
-                        <div>家住回龙观</div>
-                        <img src={nav1} alt=''></img>
-                    </div>
-                    
+                {/* 四个盒子内容 使用九宫格组件 Grid */}
+                <Grid 
+                      data={this.state.groups} // data是要循环的数组
+                      activeStyle={false} //activeStyle点击是否有灰色的 样式 false没有
+                      columnNum={2} // columnNum列数 一行占几个 2 列
+                      square={false} // square是否固定正方形 默认true 我们要矩形 false
+                      hasLine={false} // hasLine默认有边框的我们不需要改为false
+                      // renderItem 每个格子 都会执行一次这个函数 会把每个数据 传进去 是一个函数 里面可以写每个格子的 html样式
+                      renderItem={(item,index)=>{ 
+                        return <Flex className='grid-item' justify='between'>
+                              {/* 左边两行文字 */}
+                          <div className="desc">
+                            <h3>{item.title}</h3>
+                            <p>{item.desc}</p>
+                          </div>
+                          {/* 右边图片 */}
+                          <img src={`http://api-haoke-dev.itheima.net${item.imgSrc}`} alt="" />
+                          </Flex>
+                      }}
+                />
+                    {/* <Grid >
+                        <Grid.Item>
+                            <div>家住回龙观</div>
+                            <img src={nav1} alt=''></img>
+                        </Grid.Item>
+                    </Grid>
+                 */}
                 </div>
-            </div>
-
             </div>
     }
 
