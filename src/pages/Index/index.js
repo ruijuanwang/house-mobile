@@ -55,8 +55,7 @@ export default class Home extends Component{
          this.setState({
              news:res.data.body // 赋值到state中
          })
-     }
-     
+     }     
     }
   // 租房小组 获取数据 调用接口
   async getGroups(){
@@ -122,6 +121,23 @@ export default class Home extends Component{
                         </Flex.Item>    
                  })
     }
+    // 渲染 最新资讯 3个li
+    renderNews(){
+        return this.state.news.map((item,index)=>{
+            return <li key={item.id}>
+            <div className="imgBox">
+                <img src={`http://api-haoke-dev.itheima.net${item.imgSrc}`} alt=""/>
+            </div>
+            <div  className="news-text">
+                <h4>{item.title}</h4>
+                <p>
+                    <span>{item.from}</span>
+                    <span>{item.date}</span>
+                </p>
+            </div>
+            </li>
+        })
+  }
     render(){
         return <div className='index'>
             {/* 我是首页组件 */}
@@ -154,7 +170,7 @@ export default class Home extends Component{
                 {/* 四个盒子内容 使用九宫格组件 Grid */}
                 <Grid 
                       data={this.state.groups} // data是要循环的数组
-                      activeStyle={false} //activeStyle点击是否有灰色的 样式 false没有
+                      activeStyle={true} //activeStyle点击是否有灰色的 样式 false没有
                       columnNum={2} // columnNum列数 一行占几个 2 列
                       square={false} // square是否固定正方形 默认true 我们要矩形 false
                       hasLine={false} // hasLine默认有边框的我们不需要改为false
@@ -173,8 +189,17 @@ export default class Home extends Component{
                 />
             </div>
             {/* 4.最新资讯 */}
-
-            </div>
+             <div className="news">
+            {/* 头 */}
+            <h3>最新资讯</h3>
+            {/* 列表 */}
+            <ul>
+                {/* 一个  循环news数组 生成三个li */}
+                { this.renderNews() }
+            </ul>
+        </div>
+           
+        </div>
     }
 
 }
