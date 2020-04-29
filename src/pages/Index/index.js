@@ -78,6 +78,23 @@ export default class Home extends Component{
                 </a>
             ))
     }
+    // 循环4个导航菜单 封装成函数
+    renderNavs(){
+      return navs.map((item,index)=>{
+                     return <Flex.Item
+                      key={item.id}
+                    //   点击跳转到对应的页面
+                      onClick={()=>{
+                          this.props.history.push(item.path)
+                      }}
+                      >
+                         {/* 图片地址 */}
+                        <img src={item.img} alt='' /> 
+                        {/* 标题 */}
+                        <p>{item.title}</p>
+                        </Flex.Item>    
+                 })
+    }
     render(){
         return <div className='index'>
             {/* 我是首页组件 */}
@@ -97,14 +114,8 @@ export default class Home extends Component{
             {/* 用Flex组件 外层Flex ，里面每一项使用 Flex.Item */}
              <Flex className='navs'>
                  {/* 循环4个导航菜单栏 */}
-                 {navs.map((item,index)=>{
-                     return <Flex.Item key={item.id}>
-                         {/* 图片地址 */}
-                        <img src={item.img} alt='' /> 
-                        {/* 标题 */}
-                        <p>{item.title}</p>
-                        </Flex.Item>    
-                 })}                                         
+                 {/* 调用函数 */}
+                 {this.renderNavs()}                                         
             </Flex>
 
             </div>
