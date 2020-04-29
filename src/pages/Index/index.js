@@ -38,13 +38,25 @@ export default class Home extends Component{
     imgHeight: 176,
     isplay:false, // 控制轮播图是否自动播放 (应该会自动轮播，但是他不会自动播放，代码没错。原因就是 刚进来没优数据，自动轮播 没法判断怎么轮播 ，没有数据，所以我们应该等数据请求回来赋值到swiperData中才改为true，但是由于setState是异步的，所以要在第二个参数回调中，这时保证数据请求回来了，把isplsy自动播放改为true)
     groups:[], // 接收租房小组的数据
-    news:[] // 接收最新资讯的数据
+    news:[], // 接收最新资讯的数据
+    cityname:'' // 显示当前定位的城市
   }
   componentDidMount() {
     // 应该发送请求  获取轮播图数据
     this.getSwiper() // 调用函数
     this.getGroups() // 调用函数 获取租房小组数据
     this.getNews() // 调用函数 获取最新数据数据
+    //使用百度 定位当前城市--ip定位  BMap.LocalCity
+    var myCity = new window.BMap.LocalCity();
+    // 里面就是 回调函数
+    myCity.get((result)=>{
+        var cityName = result.name;
+        // alert("当前定位城市:"+cityName);// 北京市  定位的当前城市 在哪打开网站就是哪
+        // 赋值
+        this.setState({
+          cityname:cityName
+        })
+      }); 
   }
   // 获取最新数据数据的函数
   async getNews(){
@@ -145,7 +157,8 @@ export default class Home extends Component{
             <Flex className='searchBox'>
             <Flex className='searchLeft'>
                 <div className='location'>
-                   <span>上海</span>                   
+                    {/* 定位的地址 不能写死 */}
+                   <span>{this.state.cityname}</span>                   
                     <i className="iconfont icon-arrow" />
                 </div>
                 <div className='searchForm'>
