@@ -1,0 +1,11 @@
+.citylist{
+    padding-top: 45px; // 留出顶部位置 免得被遮住
+}
+// 1.导航样式
+.navbar{
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    background-color: #eee;
+}

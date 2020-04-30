@@ -156,7 +156,12 @@ export default class Home extends Component{
             {/* 0.顶部搜索栏部分 */}
             <Flex className='searchBox'>
             <Flex className='searchLeft'>
-                <div className='location'>
+                <div className='location'
+                onClick={()=>{
+                    // 点击跳转到城市列表页面
+                    this.props.history.push('/citylist')
+                }}
+                >
                     {/* 定位的地址 不能写死 */}
                    <span>{this.state.cityname}</span>                   
                     <i className="iconfont icon-arrow" />
