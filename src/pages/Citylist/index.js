@@ -15,8 +15,18 @@ export default class Citylist extends Component{
         // 调用接口 
         let res = await axios.get('http://api-haoke-dev.itheima.net/area/city?level=1')
         // 调用函数 传入获取的城市列表 
-        // 会得到返回值 一个对象 我们解构出来
+        // 1. 会得到返回值 一个对象 我们解构出来
         let {citylist,cityindex} = this.formatCity(res.data.body)
+
+        // 还差热门城市 和 定位城市
+        // 2.热门城市  调用接口 获取数据
+        let hotRes = await axios.get('http://api-haoke-dev.itheima.net/area/hot')
+        // console.log('热门城市数据',hotRes); // 有四项 
+        // 我们把res.data.body这个热门城市的数组，应该加到城市列表的对象里面  （hot就是key）
+        citylist['hot']=hotRes.data.body // hot:[热门城市数组]
+        // 右侧对应单词也要加到右侧单词数组中
+        cityindex.unshift('hot') // 从前添加 [hot,a,b,c...]
+        
         console.log('左侧新的城市列表对象',citylist);
         console.log('右侧单词数组',cityindex);
     }
