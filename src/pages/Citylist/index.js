@@ -25,7 +25,7 @@ export default class Citylist extends Component{
         //   b:[b的城市1，b的城市2...],
         //     ...
         // }
-        // 定义一个新的空对象 用来放城市列表
+        // 定义一个新的空对象 用来放我们改造的城市列表
         let citylist = {}
         // 我们应该循环数组的每一项  改成我们想要的格式
         res.data.body.forEach((item)=>{
@@ -44,7 +44,13 @@ export default class Citylist extends Component{
                 citylist[word]=[item]
             }
         })
-        console.log('新的城市对象',citylist);
+        // 右侧的单词列表 她就是我们的城市列表中的键 和城市名对应
+        // Object.keys(对象) // 返回一个数组列表，里面是对象的键名
+        // 他没有排序，我们应该给他排序 数组.sort()
+        let cityindex = Object.keys(citylist).sort();
+        console.log('左侧新的城市列表对象',citylist);
+        console.log('右侧单词数组',cityindex);
+         
         
     }
 
