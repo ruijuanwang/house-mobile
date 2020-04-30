@@ -14,7 +14,17 @@ export default class Citylist extends Component{
     async getCityList(){
         // 调用接口 
         let res = await axios.get('http://api-haoke-dev.itheima.net/area/city?level=1')
-        console.log('城市数据',res);
+        // 调用函数 传入获取的城市列表 
+        // 会得到返回值 一个对象 我们解构出来
+        let {citylist,cityindex} = this.formatCity(res.data.body)
+        console.log('左侧新的城市列表对象',citylist);
+        console.log('右侧单词数组',cityindex);
+    }
+
+    // 改造城市列表数据的函数
+    formatCity(list){
+        // list就是传来的城市列表数据 改造前的
+
         // 0: {label: "北京", value: "AREA|88cff55c-aaa4-e2e0", pinyin: "beijing", short: "bj"}
         // 1: {label: "安庆", value: "AREA|b4e8be1a-2de2-e039", pinyin: "anqing", short: "aq"}
         // 2: {label: "南宁", value: "AREA|2bc437ca-b3d2-5c3c", pinyin: "nanning", short: "nn"}
@@ -28,7 +38,7 @@ export default class Citylist extends Component{
         // 定义一个新的空对象 用来放我们改造的城市列表
         let citylist = {}
         // 我们应该循环数组的每一项  改成我们想要的格式
-        res.data.body.forEach((item)=>{
+        list.forEach((item)=>{
             // 每一个城市 根据拼音 bj 首字母b判断  从索引0开始截取一位
              let word = item.short.substr(0,1) // 截取第一个单词
             // 判断对象的键有没有第一个单词 有就push进去数组  没有就赋值一个数组
@@ -48,10 +58,13 @@ export default class Citylist extends Component{
         // Object.keys(对象) // 返回一个数组列表，里面是对象的键名
         // 他没有排序，我们应该给他排序 数组.sort()
         let cityindex = Object.keys(citylist).sort();
-        console.log('左侧新的城市列表对象',citylist);
-        console.log('右侧单词数组',cityindex);
-         
-        
+        // 我们应该返回一个对象
+        return {
+            citylist,
+            cityindex  // es6
+        }
+    // console.log('左侧新的城市列表对象',citylist);
+    // console.log('右侧单词数组',cityindex);
     }
 
     render(){
