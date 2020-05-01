@@ -5,6 +5,36 @@ import { NavBar, Icon } from 'antd-mobile';
 import './citylist.scss'
 import axios from 'axios'
 import {getCurrentCity} from '../../utils/index.js' // 导入获取定位城市的方法
+// 引入可视区渲染 react-virtualized 中的 List 组件
+import {List} from 'react-virtualized';
+
+// 显示的列表数据
+// const list = [
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   'Brian Vaughn',
+//   // And so on...
+// ];
+
+
 
 export default class Citylist extends Component{
     state={
@@ -94,6 +124,24 @@ export default class Citylist extends Component{
     // console.log('左侧新的城市列表对象',citylist);
     // console.log('右侧单词数组',cityindex);
     }
+    // -------------------
+    // rowRenderer 是每条数据的渲染函数  每个数据 都会执行他 这个函数 是循环 每条数据都会执行的
+    // 在里面可以写html 内容 
+    // 写组件里面 把这个函数
+    rowRenderer({
+    key, //唯一key
+    index, // 索引 每条数据的索引
+    isScrolling, // 是否正在滚动 true正在滚动  false没有滚动
+    isVisible, // 是否可见 true看见了
+    style, // style 每行div的 行内样式 他是组件控制的 我们必须写
+    }){
+    return (
+        //   是返回的内容
+        <div key={key} style={style}>
+        索引--{index} ---是否滚动--{isScrolling}
+        </div>
+    );
+    }
 
     render(){
         return <div className='citylist'>
@@ -110,7 +158,14 @@ export default class Citylist extends Component{
              }
             >城市选择</NavBar>
 
-            {/* 2.内容 */}
+            {/* 2.内容 List组件 可视区域渲染 */}
+            <List
+                width={300} // 列表宽
+                height={300} // 列表高
+                rowCount={this.state.cityindex.length} // 列表数据的长度 修改自己的右侧数组
+                rowHeight={100} // 行高
+                rowRenderer={this.rowRenderer}
+            />
             </div>
     }
 
