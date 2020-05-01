@@ -29,9 +29,12 @@ export default class Citylist extends Component{
         cityindex.unshift('hot') // 从前添加 [hot,a,b,c...]
         
         // 3.调用获取定位城市的函数  他是一个promise 所以要加await
-        var city = await getCurrentCity()
+        var dingwei = await getCurrentCity()
         // promise 遇到await  就会得到 resolve的值
-        console.log('我是定位城市',city);
+        // console.log('我是定位城市',dingwei);
+        // dingwei就是定位的当前的城市，我们应该加到 左侧对象城市列表 中和 右侧数组中 对应#
+        citylist['#']=[dingwei] // dingwei是个对象 我们要求格式一致 单词:数组  所以要把他放入数组中
+        cityindex.unshift('#') // 从前面添加到 右侧数组中 [#,hot,a,b,c...]
         
         
         console.log('左侧新的城市列表对象',citylist);
