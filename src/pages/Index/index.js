@@ -7,6 +7,9 @@ import nav1 from  "../../assets/images/nav-1.png"
 import nav2 from  "../../assets/images/nav-2.png"
 import nav3 from  "../../assets/images/nav-3.png"
 import nav4 from  "../../assets/images/nav-4.png"
+// 导入定位城市的函数
+import { getCurrentCity } from '../../utils/index.js'
+
 
 // navs导航菜单 觉得 是比较死的 就写死数据了  也可以发送请求
 // 导航菜单的数据
@@ -41,22 +44,28 @@ export default class Home extends Component{
     news:[], // 接收最新资讯的数据
     cityname:'' // 显示当前定位的城市
   }
-  componentDidMount() {
+  async componentDidMount() {
     // 应该发送请求  获取轮播图数据
     this.getSwiper() // 调用函数
     this.getGroups() // 调用函数 获取租房小组数据
     this.getNews() // 调用函数 获取最新数据数据
     //使用百度 定位当前城市--ip定位  BMap.LocalCity
-    var myCity = new window.BMap.LocalCity();
-    // 里面就是 回调函数
-    myCity.get((result)=>{
-        var cityName = result.name;
-        // alert("当前定位城市:"+cityName);// 北京市  定位的当前城市 在哪打开网站就是哪
-        // 赋值
-        this.setState({
-          cityname:cityName
-        })
-      }); 
+    //1. 直接调用我们封装好的函数 他是一个promis 所以要用await async
+    let cityname = await getCurrentCity()
+    // 2. 设置到state数据中 cityname是一个对象 里面的label是我们要的城市名
+    this.setState({
+      cityname:cityname.label
+    })
+    // var myCity = new window.BMap.LocalCity();
+    // // 里面就是 回调函数
+    // myCity.get((result)=>{
+    //     var cityName = result.name;
+    //     // alert("当前定位城市:"+cityName);// 北京市  定位的当前城市 在哪打开网站就是哪
+    //     // 赋值
+    //     this.setState({
+    //       cityname:cityName
+    //     })
+    //   }); 
   }
   // 获取最新数据数据的函数
   async getNews(){

@@ -7,6 +7,10 @@ import axios from 'axios'
 import {getCurrentCity} from '../../utils/index.js' // 导入获取定位城市的方法
 
 export default class Citylist extends Component{
+    state={
+        citylist:{}, // 存入左侧城市列表的数据
+        cityindex:[] // 存入右侧单词列表的数组
+    }
     componentDidMount(){
         // 调用获取城市的方法
         this.getCityList();
@@ -35,7 +39,11 @@ export default class Citylist extends Component{
         // dingwei就是定位的当前的城市，我们应该加到 左侧对象城市列表 中和 右侧数组中 对应#
         citylist['#']=[dingwei] // dingwei是个对象 我们要求格式一致 单词:数组  所以要把他放入数组中
         cityindex.unshift('#') // 从前面添加到 右侧数组中 [#,hot,a,b,c...]
-        
+        //---- 现在拿到了数据应该赋值到 state中
+        this.setState({
+            citylist, // 左侧城市数据
+            cityindex // 右侧单词数组
+        })
         
         console.log('左侧新的城市列表对象',citylist);
         console.log('右侧单词数组',cityindex);
