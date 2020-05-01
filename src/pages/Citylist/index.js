@@ -28,8 +28,11 @@ export default class Citylist extends Component{
         // 右侧对应单词也要加到右侧单词数组中
         cityindex.unshift('hot') // 从前添加 [hot,a,b,c...]
         
-        // 3.调用获取定位城市的函数
-        getCurrentCity()
+        // 3.调用获取定位城市的函数  他是一个promise 所以要加await
+        var city = await getCurrentCity()
+        // promise 遇到await  就会得到 resolve的值
+        console.log('我是定位城市',city);
+        
         
         console.log('左侧新的城市列表对象',citylist);
         console.log('右侧单词数组',cityindex);

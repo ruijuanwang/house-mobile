@@ -16,7 +16,12 @@ export let getCurrentCity=()=>{
 // 判断
 if(!city){ // 说明没有本地缓存城市  我们应该去获取
       //使用百度 定位当前城市--ip定位  BMap.LocalCity
-    var myCity = new window.BMap.LocalCity()
+
+// 百度地图的myCity.get 这个方法是异步的
+// 所以我们拿不到 返回的结果 结果是 undefined 
+// 为了能返回结果 我们可以配合 Promise  返回Promise
+return new Promise((resolve,reject)=>{
+      var myCity = new window.BMap.LocalCity()
     // 里面就是 回调函数
     myCity.get(async (result)=>{
         var cityName = result.name;
@@ -26,10 +31,24 @@ if(!city){ // 说明没有本地缓存城市  我们应该去获取
         // 我们获取完定位城市后 应该存到本地  存入对象字符串格式 dingwei.data.body对象格式的
         localStorage.setItem('current-city',JSON.stringify(dingwei.data.body))
         console.log('定位',dingwei.data.body); // {label: "北京",value: "AREA|88cff55c-aaa4-e2e0"}
-        
+        // 这是函数，我们应该返回结果
+        // return dingwei.data.body
+        // 成功就执行 resolve 
+        resolve(dingwei.data.body)
       })
+})
+
 }else{ // 说明有本地缓存 直接返回本地定位城市
-  return city
+    // return city
+    // 为了和if里面的返回值一致 这里我们也返回一个promise
+    // 方法1
+    // return new Promise((resolve, reject) => {
+    //   // 这里直接返回city
+    //   resolve(city)
+    // })
+    // 方法2 成功 简写
+    return Promise.resolve(city)
+
 }
 
 }
