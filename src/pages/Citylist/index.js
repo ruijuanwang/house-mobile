@@ -28,7 +28,7 @@ export default class Citylist extends Component{
         // 右侧对应单词也要加到右侧单词数组中
         cityindex.unshift('hot') // 从前添加 [hot,a,b,c...]
         
-        // 调用获取定位城市的函数
+        // 3.调用获取定位城市的函数
         getCurrentCity()
         
         console.log('左侧新的城市列表对象',citylist);
