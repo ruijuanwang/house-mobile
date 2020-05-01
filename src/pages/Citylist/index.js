@@ -4,6 +4,7 @@ import { NavBar, Icon } from 'antd-mobile';
 //  导入样式
 import './citylist.scss'
 import axios from 'axios'
+import {getCurrentCity} from '../../utils/index.js' // 导入获取定位城市的方法
 
 export default class Citylist extends Component{
     componentDidMount(){
@@ -26,6 +27,9 @@ export default class Citylist extends Component{
         citylist['hot']=hotRes.data.body // hot:[热门城市数组]
         // 右侧对应单词也要加到右侧单词数组中
         cityindex.unshift('hot') // 从前添加 [hot,a,b,c...]
+        
+        // 调用获取定位城市的函数
+        getCurrentCity()
         
         console.log('左侧新的城市列表对象',citylist);
         console.log('右侧单词数组',cityindex);
