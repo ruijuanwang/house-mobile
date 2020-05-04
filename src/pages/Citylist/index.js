@@ -1,6 +1,6 @@
 import React,{ Component } from 'react'
 // 导入组件
-import { NavBar, Icon } from 'antd-mobile'; 
+import { NavBar, Icon, Toast } from 'antd-mobile'; 
 //  导入样式
 import './citylist.scss'
 import axios from 'axios'
@@ -152,7 +152,25 @@ export default class Citylist extends Component{
              citys.map((item)=>{
                 return <div 
                 className='name'
-                key={item.value}>
+                key={item.value}
+                // 点击左侧 城市 只有北上广深 有房源 可以切换 其他的显示暂无房源
+                onClick={()=>{
+                    // 1.可以使用 if else 
+                    // 2.使用数组
+                    let hasHouse=['北京','上海','广州','深圳']
+                    // hasHouse.idnexOf(城市) 不是北上广深 idnexOf就找不到 返回-1 找到返回索引
+                    if(hasHouse.indexOf(item.label)!==-1){
+                        // 说明是北上广深 切换城市 跳转主页
+                        // 切换localstorage 本地存储的城市
+                        localStorage.setItem('current-city',JSON.stringify(item))
+                        // 跳转首页
+                        this.props.history.push('/home/index')
+                    }else{
+                        // -1 说明不是北上广深 提示暂无房源
+                        Toast.info('该城市暂无房源哦~',2)
+                    }
+                }}
+                >
                 {item.label} 
                 </div>
             })
