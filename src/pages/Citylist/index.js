@@ -154,8 +154,8 @@ export default class Citylist extends Component{
                 </div>
             })
             }
-            
         </div>
+       
     );
     }
     // 计算行高的函数 每个div(B+北海,北京，宝鸡)的高度
@@ -184,6 +184,13 @@ export default class Citylist extends Component{
             default:
                 return word.toUpperCase() // 其他转换成大写
         }
+    }
+    // 循环渲染右侧数组的函数
+    renderRightWord=()=>{
+      return this.state.cityindex.map((item,index)=>{
+            // 循环渲染右侧单词 生成li
+                return  <li key={index}>{ item }</li>
+            })
     }
 
 
@@ -217,6 +224,13 @@ export default class Citylist extends Component{
                    />
                )}
             </AutoSizer>
+             {/* 2.右侧单词显示布局
+            使用固定定位  定位到右侧 */}
+            <ul className='city-index'>
+                {/* active类名代表选中状态   循环每一项数组单词 */}
+                {/* 调用函数 */}
+            { this.renderRightWord() }
+            </ul>
             </div>
     }
 
