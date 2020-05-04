@@ -37,6 +37,8 @@ import {List, AutoSizer} from 'react-virtualized';
 
 
 export default class Citylist extends Component{
+    // 创建ref
+    listRef =React.createRef()
     state={
         citylist:{}, // 存入左侧城市列表的数据
         cityindex:[], // 存入右侧单词列表的数组
@@ -192,7 +194,14 @@ export default class Citylist extends Component{
             // 循环渲染右侧单词 生成li
             // item 就是 # hot a... 。其中hot 转成 '热' 其他改成大写 字母  判断简单的直接写三元
             // 默认第一个选中 高亮 
-                return  <li className={ this.state.activeIndex===index?'active':''}  key={index}>
+                return  <li className={ this.state.activeIndex===index?'active':''}  key={index}
+                onClick={()=>{
+                    // 点击右侧单词 让左侧List列表 滚动到对应单词
+                    // List组件滚动到对应单词 只要list调用 scrollTop方法 并且传一个索引 
+                    // List组件.scrollToRow(对应单词的索引)
+                    this.listRef.current.scrollToRow(index) // 滚动到对应的索引
+                }}
+                >
                 { item==='hot'? '热':item.toUpperCase() }
                 </li>
             })
@@ -236,6 +245,8 @@ export default class Citylist extends Component{
            <AutoSizer>
                {({width,height})=>(
                    <List
+                    ref={this.listRef} 
+                    scrollToAlignment='start' // 让列表滚动到索引对应的顶部
                     width={width} // 列表宽
                     height={height} // 列表高
                     rowCount={this.state.cityindex.length} // 列表数据的长度 总条数
