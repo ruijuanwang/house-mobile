@@ -139,10 +139,11 @@ export default class Citylist extends Component{
         let citys = this.state.citylist[word] // 通过单词拿到左侧对应的数组城市 ["北京","北海","宝鸡"]
     return (
         //   是返回的内容
-        // 这个div就是左侧的单词城市 A ..B..
+        // 1.这个div就是左侧的单词城市 A ..B..
         <div className='city' key={key} style={style}>
             {/* A数组 对应应该是A的城市数组 */}
-            <div className='title'>{ word }</div>
+            {/*  格式化word 显示 调用函数 */}
+            <div className='title'>{ this.formatWord(word) }</div>
             {/* 循环数组 citys 显示城市 */}
             {
              citys.map((item)=>{
@@ -172,6 +173,19 @@ export default class Citylist extends Component{
         // 返回值
         return 36+citys.length*50
     }
+    // 格式化单词的函数 # 定位城市 hot 热门城市 其他 转化成大写
+    formatWord=(word)=>{
+        // 接收传来的参数word 
+        switch(word){
+            case '#':
+                return '定位城市'
+            case 'hot':
+                return '热门城市'
+            default:
+                return word.toUpperCase() // 其他转换成大写
+        }
+    }
+
 
 
     render(){
