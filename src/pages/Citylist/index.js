@@ -39,7 +39,8 @@ import {List, AutoSizer} from 'react-virtualized';
 export default class Citylist extends Component{
     state={
         citylist:{}, // 存入左侧城市列表的数据
-        cityindex:[] // 存入右侧单词列表的数组
+        cityindex:[], // 存入右侧单词列表的数组
+        activeIndex:0 // 右侧单词高亮显示 默认第一项
     }
     componentDidMount(){
         // 调用获取城市的方法
@@ -189,7 +190,11 @@ export default class Citylist extends Component{
     renderRightWord=()=>{
       return this.state.cityindex.map((item,index)=>{
             // 循环渲染右侧单词 生成li
-                return  <li key={index}>{ item }</li>
+            // item 就是 # hot a... 。其中hot 转成 '热' 其他改成大写 字母  判断简单的直接写三元
+            // 默认第一个选中 高亮 
+                return  <li className={ this.state.activeIndex===index?'active':''}  key={index}>
+                { item==='hot'? '热':item.toUpperCase() }
+                </li>
             })
     }
 
