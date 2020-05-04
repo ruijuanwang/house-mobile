@@ -197,6 +197,21 @@ export default class Citylist extends Component{
                 </li>
             })
     }
+    // 当List组件滚动的时候触发该函数
+    // ({ overscanStartIndex: number, overscanStopIndex: number, startIndex: number, stopIndex: number }): void
+    // 是一个函数 参数是一个对象 {} 对象里面有四个参数
+    // 这四个参数都是number数字类型的   最后的:void 意思是不需要返回值
+    onRowsRendered=({overscanStartIndex,overscanStopIndex,startIndex,stopIndex})=>{
+        // console.log('滚动了啊');
+        // startIndex 是左侧列表 滚动到 顶部的对应索引
+        // 当单词滚动到顶部的时候 右侧对应的索引单词要高亮
+        // activeIndex 是那个索引的数字 哪个高亮 正好可以控制
+       if(this.state.activeIndex!==startIndex){ // 如果两次索引不一样 才去修改 如果一样 没必要修改 效率高
+            this.setState({
+            activeIndex:startIndex // 0 1 2 3...
+        })  
+       }     
+    }
 
 
 
@@ -226,6 +241,7 @@ export default class Citylist extends Component{
                     rowCount={this.state.cityindex.length} // 列表数据的长度 总条数
                     rowHeight={this.getHeight} // 行高 1.可以是固定高度 2.可以是一个函数
                     rowRenderer={this.rowRenderer} // 每条数据的渲染函数
+                    onRowsRendered={ this.onRowsRendered } // 当List列表滚动的时候执行该函数
                    />
                )}
             </AutoSizer>
