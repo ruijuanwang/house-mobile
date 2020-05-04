@@ -135,10 +135,25 @@ export default class Citylist extends Component{
     isVisible, // 是否可见 true看见了
     style, // style 每行div的 行内样式 他是组件控制的 我们必须写
     })=>{
+        let word =this.state.cityindex[index] //通过索引拿到对应数组的单词  # hot A B C...
+        let citys = this.state.citylist[word] // 通过单词拿到左侧对应的数组城市 ["北京","北海","宝鸡"]
     return (
         //   是返回的内容
-        <div key={key} style={style}>
-        索引--{index} ---是否滚动--{isScrolling}
+        // 这个div就是左侧的单词城市 A ..B..
+        <div className='city' key={key} style={style}>
+            {/* A数组 对应应该是A的城市数组 */}
+            <div className='title'>{ word }</div>
+            {/* 循环数组 citys 显示城市 */}
+            {
+             citys.map((item)=>{
+                return <div 
+                className='name'
+                key={item.value}>
+                {item.label} 
+                </div>
+            })
+            }
+            
         </div>
     );
     }
@@ -167,7 +182,7 @@ export default class Citylist extends Component{
                     width={width} // 列表宽
                     height={height} // 列表高
                     rowCount={this.state.cityindex.length} // 列表数据的长度 总条数
-                    rowHeight={100} // 行高
+                    rowHeight={200} // 行高
                     rowRenderer={this.rowRenderer} // 每条数据的渲染函数
                    />
                )}

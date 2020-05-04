@@ -10,3 +10,20 @@
     width: 100%;
     background-color: #eee;
 }
+// 城市列表样式
+.city{
+    background-color: #fff;
+    .title{
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #999;
+    }
+    .name{
+        height: 50px;
+        line-height: 50px;
+        padding: 0 15px;
+        font-size: 16px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+    }
+}
