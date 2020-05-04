@@ -157,6 +157,22 @@ export default class Citylist extends Component{
         </div>
     );
     }
+    // 计算行高的函数 每个div(B+北海,北京，宝鸡)的高度
+    // 会传入一个参数 ({ index: number }): number 
+    // 函数的参数是一个对象{} 里面的 index 要求是Number类型的   
+    // 最后的:number 表示返回值要求也是Number类型的
+    getHeight=({index})=>{
+        // index 是每一项的索引
+        // 1.通过 索引 拿到数组的 单词
+        let word = this.state.cityindex[index]
+        // 2.再通过 单词拿到对应 城市数组
+        let citys = this.state.citylist[word]
+        // 每一个大div的高度应该是 单词高度+所有城市数组的高度
+        // 每个大div高度 = 36+城市个数*50
+        // 返回值
+        return 36+citys.length*50
+    }
+
 
     render(){
         return <div className='citylist'>
@@ -182,7 +198,7 @@ export default class Citylist extends Component{
                     width={width} // 列表宽
                     height={height} // 列表高
                     rowCount={this.state.cityindex.length} // 列表数据的长度 总条数
-                    rowHeight={200} // 行高
+                    rowHeight={this.getHeight} // 行高 1.可以是固定高度 2.可以是一个函数
                     rowRenderer={this.rowRenderer} // 每条数据的渲染函数
                    />
                )}
