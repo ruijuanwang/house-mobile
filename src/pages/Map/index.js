@@ -36,6 +36,26 @@ export default class Map extends Component{
                 map.addControl(new BMap.OverviewMapControl()); //比例尺    
                 map.addControl(new BMap.MapTypeControl()); // 右下角的小地图 
                 map.setCurrentCity("北京"); //地图三维卫星
+
+                // 给地图添加一个最简单的文字覆盖物
+                var opts = {
+                position : point,    // 覆盖物显示的 经纬度坐标点
+                offset   : new BMap.Size(30, -30) // 设置文本偏移量 x y的位置
+                }
+                // label 覆盖物 new BMap.Label("覆盖物内容", {})
+                // label 标签 类似一个div
+                var label = new BMap.Label("嘿嘿嘿", opts);  // 创建label div 内容是第一个参数
+                    // label.setStyle({}) 给label div设置样式
+                    label.setStyle({
+                        color : "red",
+                        fontSize : "12px",
+                        height : "20px",
+                        lineHeight : "20px",
+                        fontFamily:"微软雅黑"
+                    });
+                    // map.addOverlay(); 给地图添加一个覆盖物 
+                map.addOverlay(label);   
+                // 总结：1.创建label div盒子 2.内容是 嘿嘿嘿 3.显示在对应的坐标上
             }      
         }, 
         dingwei.label);
