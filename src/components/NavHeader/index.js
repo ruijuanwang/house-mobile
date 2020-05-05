@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom' // 路由
+import PropTypes from 'prop-types' // 验证组件类型
 
 // 导入组件
 import { NavBar, Icon } from 'antd-mobile';
@@ -31,6 +32,23 @@ class NavHeader extends Component {
 // 正常路由打开的组件默认是有history路由操作的
 // 注意：如果自己单独封装了一个组件 在导入使用history就没有了
 // 解决方法 :当组件不能使用路由的时候 就用withRouter包裹 
+
+// 2.组件封装验证类型：如果类型不对就报错 防止别人乱传参数
+// a 下载prop-types包 并且引入
+// b 组件.propTypes={参数名:验证类型}
+// propTypes 是规定写法
+NavHeader.propTypes={
+    children:PropTypes.string // children是一个字符串类型
+    // props后面的都可以验证 组件中间的children 或者父传子...
+}
+
+// 3.设置默认值 导出之前
+// 如果没有传参数 我们应该设置一个默认值
+// 组件.defaultPops={参数：默认值}
+NavHeader.defaultProps={
+    children:'默认导航标题'
+}
+
 export default withRouter(NavHeader) 
 // withRouter(NavHeader) 就是react封装的高阶组件
 
