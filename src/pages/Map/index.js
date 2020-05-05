@@ -5,6 +5,8 @@ import NavHeader from '../../components/NavHeader'
 import styles from './map.module.css'
 // 引入定位城市
 import { getCurrentCity } from '../../utils/index'
+// 导入axios
+import axios from 'axios'
 
 let BMap = window.BMap // 使用地图函数要加 window. 来调用
 export default class Map extends Component{
@@ -24,7 +26,7 @@ export default class Map extends Component{
         //  创建地址解析器实例     
         var myGeo = new BMap.Geocoder();      
         // 2移动地图到中心点经纬度
-        myGeo.getPoint(dingwei.label, function(point){  
+        myGeo.getPoint(dingwei.label,async (point)=>{  
             // point 城市名转换的 对应经纬度点    
             if (point) {  
                 // 3.缩放地图    
@@ -37,6 +39,11 @@ export default class Map extends Component{
                 map.addControl(new BMap.MapTypeControl()); // 右下角的小地图 
                 map.setCurrentCity("北京"); //地图三维卫星
 
+                // --------发送请求获取当前定位城市 有所区的 房子套数
+                // await async必须写在离他最近的函数前
+                let res = await axios.get(`http://api-haoke-dev.itheima.net/area/map?id=${dingwei.value}`) //传入定位城市的id
+                console.log(res);
+                
                 // 1.给地图添加一个最简单的文字覆盖物
                 // 总结：1.创建label div盒子 2.内容是 嘿嘿嘿 3.显示在对应的坐标上
                 var opts = {
