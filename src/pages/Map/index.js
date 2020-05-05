@@ -39,36 +39,52 @@ export default class Map extends Component{
                 map.addControl(new BMap.MapTypeControl()); // 右下角的小地图 
                 map.setCurrentCity("北京"); //地图三维卫星
 
-                // --------发送请求获取当前定位城市 有所区的 房子套数
+                // --------发送请求获取当前定位城市 所有区的 房子套数
                 // await async必须写在离他最近的函数前
                 let res = await axios.get(`http://api-haoke-dev.itheima.net/area/map?id=${dingwei.value}`) //传入定位城市的id
-                console.log(res);
-                
-                // 1.给地图添加一个最简单的文字覆盖物
-                // 总结：1.创建label div盒子 2.内容是 嘿嘿嘿 3.显示在对应的坐标上
-                var opts = {
-                position : point,    // 覆盖物显示的 经纬度坐标点
-                offset   : new BMap.Size(30, -30) // 设置文本偏移量 x y的位置
-                }
-                // 1.2 label 覆盖物 new BMap.Label("覆盖物内容", {})
-                // label 标签 类似一个div----1.里面可以写文本 2.也可以写div h1等 写类名样式
-                // 第一个参数 1.可以直接写div 内容 2.可以先写 '' 在调用 label.setContent(内容)
-                var label = new BMap.Label('' , opts);  // 创建label div 内容是第一个参数
-                // 覆盖物样式结构(圆形覆盖物):使用第二种写法 setContent(内容)
-                label.setContent( `
-                <div class="${styles.bubble}">
-                    <p class="${styles.name}">朝阳区</p>
-                    <p>10套</p>
-                </div>
-                `)
-                // 1.3 label.setStyle({}) 给label div设置样式
-                label.setStyle({});
-                //--- 绑定点击 覆盖物的事件
-                label.addEventListener('click',()=>{
-                    console.log('点击了覆盖物',label);                   
+                // console.log(res);
+
+                //  item每一项的数据:
+                //  {  label: "白云"
+                //     value: "AREA|8b5511b3-7699-f921"
+                //     coord: {latitude: "23.17599", longitude: "113.261927"}
+                //     count: 375
+                //   } 
+                // res获取来有12个区在地图上，应该循环生成12个圆形覆盖物
+                res.data.body.forEach((item)=>{
+                    // console.log('每一项区的数据',item);
+                    // 以下就是 一个item  循环生成
+                    // 通过res得到的经纬度 生成坐标点圆圈显示不同的位置--longitude 经度  latitude 纬度
+                    var point = new BMap.Point(item.coord.longitude,item.coord.latitude); // 设置每一项经纬度
+                    // 1.给地图添加一个最简单的文字覆盖物
+                    // 总结：1.创建label div盒子 2.内容是 嘿嘿嘿 3.显示在对应的坐标上
+                    var opts = {
+                    position : point,    // 覆盖物显示的 经纬度坐标点
+                    offset   : new BMap.Size(30, -30) // 设置文本偏移量 x y的位置
+                    }
+                    // 1.2 label 覆盖物 new BMap.Label("覆盖物内容", {})
+                    // label 标签 类似一个div----1.里面可以写文本 2.也可以写div h1等 写类名样式
+                    // 第一个参数 1.可以直接写div 内容 2.可以先写 '' 在调用 label.setContent(内容)
+                    var label = new BMap.Label('' , opts);  // 创建label div 内容是第一个参数
+                    // 覆盖物样式结构(圆形覆盖物):使用第二种写法 setContent(内容)
+                    label.setContent( `
+                    <div class="${styles.bubble}">
+                        <p class="${styles.name}">${item.label}</p> 
+                        <p>${item.count}套</p>
+                    </div>
+                    `)
+                    // 1.3 label.setStyle({}) 给label div设置样式
+                    label.setStyle({});
+                    //--- 绑定点击 覆盖物的事件
+                    label.addEventListener('click',()=>{
+                        console.log('点击了覆盖物',item.label+'----'+item.value);                   
+                    })
+                    // 1.4 map.addOverlay(); 给地图添加一个覆盖物 显示在地图上
+                    map.addOverlay(label);  
+                        
                 })
-                // 1.4 map.addOverlay(); 给地图添加一个覆盖物 显示在地图上
-                map.addOverlay(label);   
+                
+                 
                 
             }      
         }, 
