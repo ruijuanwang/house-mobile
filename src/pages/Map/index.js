@@ -1,5 +1,6 @@
 import React,{ Component } from 'react'
 import './map.scss' // 引入样式
+import NavHeader from '../../components/NavHeader'
 
 let BMap = window.BMap // 使用地图函数要加 window. 来调用
 export default class Map extends Component{
@@ -18,6 +19,9 @@ export default class Map extends Component{
     }
     render(){
         return <div className='map'>
+                {/*1. 顶部导航组件 */}
+                {/* children 组件标签之间的内容 */}
+                 <NavHeader>地图找房</NavHeader>
                 {/* Map组件 */}
                 <div id='container'></div>          
             </div>
