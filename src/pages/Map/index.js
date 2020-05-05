@@ -37,25 +37,28 @@ export default class Map extends Component{
                 map.addControl(new BMap.MapTypeControl()); // 右下角的小地图 
                 map.setCurrentCity("北京"); //地图三维卫星
 
-                // 给地图添加一个最简单的文字覆盖物
+                // 1.给地图添加一个最简单的文字覆盖物
+                // 总结：1.创建label div盒子 2.内容是 嘿嘿嘿 3.显示在对应的坐标上
                 var opts = {
                 position : point,    // 覆盖物显示的 经纬度坐标点
                 offset   : new BMap.Size(30, -30) // 设置文本偏移量 x y的位置
                 }
-                // label 覆盖物 new BMap.Label("覆盖物内容", {})
-                // label 标签 类似一个div
-                var label = new BMap.Label("嘿嘿嘿", opts);  // 创建label div 内容是第一个参数
-                    // label.setStyle({}) 给label div设置样式
-                    label.setStyle({
-                        color : "red",
-                        fontSize : "12px",
-                        height : "20px",
-                        lineHeight : "20px",
-                        fontFamily:"微软雅黑"
-                    });
-                    // map.addOverlay(); 给地图添加一个覆盖物 
+                // 1.2 label 覆盖物 new BMap.Label("覆盖物内容", {})
+                // label 标签 类似一个div----1.里面可以写文本 2.也可以写div h1等 写类名样式
+                // 第一个参数 1.可以直接写div 内容 2.可以先写 '' 在调用 label.setContent(内容)
+                var label = new BMap.Label('' , opts);  // 创建label div 内容是第一个参数
+                // 覆盖物样式结构:使用第二种写法 setContent(内容)
+                label.setContent( `
+                <div class="${styles.bubble}">
+                    <p class="${styles.name}">朝阳区</p>
+                    <p>10套</p>
+                </div>
+                `)
+                // 1.3 label.setStyle({}) 给label div设置样式
+                label.setStyle({});
+                // 1.4 map.addOverlay(); 给地图添加一个覆盖物 显示在地图上
                 map.addOverlay(label);   
-                // 总结：1.创建label div盒子 2.内容是 嘿嘿嘿 3.显示在对应的坐标上
+                
             }      
         }, 
         dingwei.label);
