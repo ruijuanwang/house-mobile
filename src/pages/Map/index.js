@@ -47,7 +47,7 @@ export default class Map extends Component{
                 // label 标签 类似一个div----1.里面可以写文本 2.也可以写div h1等 写类名样式
                 // 第一个参数 1.可以直接写div 内容 2.可以先写 '' 在调用 label.setContent(内容)
                 var label = new BMap.Label('' , opts);  // 创建label div 内容是第一个参数
-                // 覆盖物样式结构:使用第二种写法 setContent(内容)
+                // 覆盖物样式结构(圆形覆盖物):使用第二种写法 setContent(内容)
                 label.setContent( `
                 <div class="${styles.bubble}">
                     <p class="${styles.name}">朝阳区</p>
@@ -56,6 +56,10 @@ export default class Map extends Component{
                 `)
                 // 1.3 label.setStyle({}) 给label div设置样式
                 label.setStyle({});
+                //--- 绑定点击 覆盖物的事件
+                label.addEventListener('click',()=>{
+                    console.log('点击了覆盖物',label);                   
+                })
                 // 1.4 map.addOverlay(); 给地图添加一个覆盖物 显示在地图上
                 map.addOverlay(label);   
                 
