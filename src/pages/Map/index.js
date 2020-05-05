@@ -87,7 +87,7 @@ export default class Map extends Component{
                     // 总结：1.创建label div盒子 2.内容是 嘿嘿嘿 3.显示在对应的坐标上
                     var opts = {
                     position : point,    // 覆盖物显示的 经纬度坐标点
-                    offset   : new BMap.Size(30, -30) // 设置文本偏移量 x y的位置
+                    offset   : new BMap.Size(-35, -35) // 设置文本偏移量 x y的位置(偏移高度和宽度的一半 把圆圈设置到中心点)
                     }
                     // 1.2 label 覆盖物 new BMap.Label("覆盖物内容", {})
                     // label 标签 类似一个div----1.里面可以写文本 2.也可以写div h1等 写类名样式
@@ -101,7 +101,10 @@ export default class Map extends Component{
                     </div>
                     `)
                     // 1.3 label.setStyle({}) 给label div设置样式
-                    label.setStyle({});
+                    label.setStyle({ // 什么样式也没写 默认有红色圆点样式=> 有padding和border样式 应该去掉
+                       padding:0,
+                       border:'none'
+                    });
                     //--- 绑定点击 覆盖物的事件
                     label.addEventListener('click',()=>{
                         console.log('点击了覆盖物',item.label+'----'+item.value);                   
