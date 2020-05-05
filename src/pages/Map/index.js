@@ -29,6 +29,13 @@ export default class Map extends Component{
             if (point) {  
                 // 3.缩放地图    
                 map.centerAndZoom(point, 11);  // 11市区  13 县镇  15小区街道  20家门口      
+                map.addControl(new BMap.NavigationControl()); 
+                 
+                // 给地图添加控件  
+                map.addControl(new BMap.ScaleControl()); // 右下角缩放控件
+                map.addControl(new BMap.OverviewMapControl()); //比例尺    
+                map.addControl(new BMap.MapTypeControl()); // 右下角的小地图 
+                map.setCurrentCity("北京"); //地图三维卫星
             }      
         }, 
         dingwei.label);
