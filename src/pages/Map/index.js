@@ -18,7 +18,7 @@ export default class Map extends Component{
     async initMap(){
        
         // 1.创建地图实例 放到对应的div id为container
-        var map = new BMap.Map('container')   
+        this.map = new BMap.Map('container')   
          //1.1 通过定位拿到城市名
         let dingwei = await getCurrentCity()
         console.log(dingwei);       
@@ -30,18 +30,45 @@ export default class Map extends Component{
             // point 城市名转换的 对应经纬度点    
             if (point) {  
                 // 3.缩放地图    
-                map.centerAndZoom(point, 11);  // 11市区  13 县镇  15小区街道  20家门口      
-                map.addControl(new BMap.NavigationControl()); 
+                this.map.centerAndZoom(point, 11);  // 11市区  13 县镇  15小区街道  20家门口      
+                this.map.addControl(new BMap.NavigationControl()); 
                  
                 // 给地图添加控件  
-                map.addControl(new BMap.ScaleControl()); // 右下角缩放控件
-                map.addControl(new BMap.OverviewMapControl()); //比例尺    
-                map.addControl(new BMap.MapTypeControl()); // 右下角的小地图 
-                map.setCurrentCity("北京"); //地图三维卫星
+                this.map.addControl(new BMap.ScaleControl()); // 右下角缩放控件
+                this.map.addControl(new BMap.OverviewMapControl()); //比例尺    
+                this.map.addControl(new BMap.MapTypeControl()); // 右下角的小地图 
+                this.map.setCurrentCity("北京"); //地图三维卫星
 
-                // --------发送请求获取当前定位城市 所有区的 房子套数
+                //---- 调用封装的函数 获取所有区的房子以及循环生成覆盖物
+                // 传参数：1.dingwei.value
+                // map涉及到两个函数要用：
+                // 1.可以当做参数传进去 
+                // 2.使用全局变量 定义在外面 
+                // 3.赋值给this （this就是map组件）使用第三种(在组件里面统统使用this.map)
+                this.renderOverlays(dingwei.value)                  
+                
+            }      
+        }, 
+        dingwei.label);
+
+
+
+
+    // //    ------------------------------------------- /
+    //     // 1.创建地图实例 放到对应的div id为container
+    //     var map = new BMap.Map('container')
+    //     // 2.移动地图到中心点经纬度  (116.404,39.915) 默认北京天安门
+    //     // 在哪个城市 地图就是哪个城市的 不应该写死 北京--修改经纬度就可以
+    //     var point =new BMap.Point(116.404,39.915)
+    //     // 3.缩放地图
+    //     // 11市区  13 县镇  15小区街道  20家门口
+    //     map.centerAndZoom(point,11) // 数字越大 地图就会放大 看到的就更精确 放大缩小
+    }
+    // 函数 发送请求获取定位城市的所有区 的房子套数 以及 循环生成覆盖物
+     renderOverlays= async (id)=>{
+                        // --------发送请求获取当前定位城市 所有区的 房子套数
                 // await async必须写在离他最近的函数前
-                let res = await axios.get(`http://api-haoke-dev.itheima.net/area/map?id=${dingwei.value}`) //传入定位城市的id
+                let res = await axios.get(`http://api-haoke-dev.itheima.net/area/map?id=${id}`) //传入定位城市的id
                 // console.log(res);
 
                 //  item每一项的数据:
@@ -80,28 +107,9 @@ export default class Map extends Component{
                         console.log('点击了覆盖物',item.label+'----'+item.value);                   
                     })
                     // 1.4 map.addOverlay(); 给地图添加一个覆盖物 显示在地图上
-                    map.addOverlay(label);  
+                    this.map.addOverlay(label);  
                         
                 })
-                
-                 
-                
-            }      
-        }, 
-        dingwei.label);
-
-
-
-
-    // //    ------------------------------------------- /
-    //     // 1.创建地图实例 放到对应的div id为container
-    //     var map = new BMap.Map('container')
-    //     // 2.移动地图到中心点经纬度  (116.404,39.915) 默认北京天安门
-    //     // 在哪个城市 地图就是哪个城市的 不应该写死 北京--修改经纬度就可以
-    //     var point =new BMap.Point(116.404,39.915)
-    //     // 3.缩放地图
-    //     // 11市区  13 县镇  15小区街道  20家门口
-    //     map.centerAndZoom(point,11) // 数字越大 地图就会放大 看到的就更精确 放大缩小
     }
     render(){
             // console.log(styles); // {news: "map_news__1mbE2"}=> styles是一个对象{news:react新取的唯一名字} 
